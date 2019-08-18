@@ -1,14 +1,24 @@
-import numpy as np
+ import numpy as np
+import pandas as pd
 
 m=0
 c=0
 lr=0.0001
 epoch=10000
 
-mse_marks = np.array([15,22,16,18,30])
-ese_marks = np.array([55,68,62,65,72])
+mse_marks = np.array([10,7,3,16,9,11,7,10,8,8,8,12,4,7,15,12,6,9,10,7,13,5,8,12,17,11,10,16,17,12,11,13,11,10,7,6,9,9,12,11,6,7,14,12,10,14,5,6,11,9,9,8,9,6,10,17,11,11,10,8,7,7,10,11,7,12,8,10,10,8,9,11,12])
+ese_marks = np.array([42,39,32,50,44,55,43,37,43,41,48,61,44,45,58,52,45,46,46,40,57,42,35,52,64,47,42,52,55,50,53,50,51,49,39,39,49,52,49,45,36,35,50,43,49,57,38,41,46,50,51,38,49,44,41,57,45,49,49,50,44,40,50,43,36,50,42,51,47,40,49,53,58])
 
-n=len(mse_marks)
+n=float(len(mse_marks))
+
+x = pd.Series(mse_marks)
+y = pd.Series(ese_marks)
+
+r = x.cov(y)/(x.std()*y.std())
+
+beta1 = (r*y.std())/x.std()
+beta0 = y.mean()-beta1*x.mean()
+print(beta1,beta0)
 
 for i in range(epoch):
   y_pred = mse_marks*m + c
